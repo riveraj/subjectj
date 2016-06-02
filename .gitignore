@@ -1,3 +1,14 @@
+# OS X Files
+.DS_Store
+
+# Eclipse Files
+.classpath
+.project
+.settings
+
+# Maven Files
+target/
+
 *.class
 
 # Mobile Tools for Java (J2ME)
