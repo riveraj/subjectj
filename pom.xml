@@ -2,22 +2,32 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.rit.cs</groupId>
   <artifactId>SubjectJ</artifactId>
-  <version>0.1</version>
-  <name>Weaver</name>
+  <version>0.0.1</version>
+  <name>SubjectJ</name>
   <description>A subject-oriented extension to the Java programming language.</description>
+
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<asm.tree.version>5.1</asm.tree.version>
+  	<maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+  	<maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
+  	<maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
+  </properties>
+
   <dependencies>
   	<dependency>
   		<groupId>org.ow2.asm</groupId>
   		<artifactId>asm-tree</artifactId>
-  		<version>5.1</version>
+  		<version>${asm.tree.version}</version>
   	</dependency>
   </dependencies>
+
   <build>
   	<plugins>
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-compiler-plugin</artifactId>
-  			<version>3.5.1</version>
+  			<version>${maven.compiler.plugin.version}</version>
   			<configuration>
   				<source>1.8</source>
   				<target>1.8</target>
@@ -26,7 +36,7 @@
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-dependency-plugin</artifactId>
-  			<version>2.10</version>
+  			<version>${maven.dependency.plugin.version}</version>
   			<executions>
   				<execution>
   					<id>copy-dependencies</id>
@@ -43,23 +53,13 @@
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-javadoc-plugin</artifactId>
-  			<version>2.10.3</version>
+  			<version>${maven.javadoc.plugin.version}</version>
   			<executions>
   				<execution>
   					<goals>
   						<goal>javadoc</goal>
   					</goals>
   					<phase>site</phase>
-  					<configuration>
-  						<sourceFileExcludes>
-  							<exclude>*.java</exclude>
-  							<exclude>rules_legal/*.java</exclude>
-  							<exclude>rules_win/*.java</exclude>
-  							<exclude>setup/*.java</exclude>
-  							<exclude>ui/*.java</exclude>
-  						</sourceFileExcludes>
-  						<excludePackageNames>edu.rit.cs.parser.*</excludePackageNames>
-  					</configuration>
   				</execution>
   			</executions>
   		</plugin>
