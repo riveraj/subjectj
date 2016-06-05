@@ -1,5 +1,6 @@
-edu.rit.cs.weaver
-edu.rit.cs.weaver.build
-edu.rit.cs.weaver.composer
-edu.rit.cs.weaver.map
-edu.rit.cs.weaver.traversal
+org.subjectj.compositor
+org.subjectj.compositor.build
+org.subjectj.compositor.composer
+org.subjectj.compositor.map
+org.subjectj.compositor.traversal
+org.subjectj.util
