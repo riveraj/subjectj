@@ -1,0 +1,101 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{syntax}
+\usepackage[scale=0.9]{geometry}
+\setlength{\grammarindent}{8em}
+
+\begin{document}
+    \section*{SubjectJ BNF Grammars}
+    The following are the BNF grammars for the files that SubjectJ will use to perform the compositions. Note that the project is in the \emph{very} pre-alpha stages, and the grammar are not just subject to, but very likely to change.
+    \paragraph{The include (\emph{.sji}) file}
+    This file contains the list of all packages and/or class files that SubjectJ will work with. Any package or class file not listed in this file will not be modified or otherwise touched by SubjectJ. This file is important because even if some of the included classes may not be mentioned in any mappings, SubjectJ will update every class named in this file as necessary so that they correctly interact with any newly composed class(es).
+    \begin{grammar}
+        <Include> ::= <List> <Include>
+        \alt <List>
+
+        <List> ::= package <PathList> <OptionList>
+        \alt class <PathList>
+
+        <PathList> ::= <Path> , <PathList>
+        \alt <Path>
+
+        <Path> ::= <String> . <Path>
+        \alt <String>
+
+        <OptionList> ::= <Option> <OptionList>
+        \alt <Option>
+
+        <Option> ::= exclude <ClassSpecification>
+        \alt  recursive
+
+        <String> ::= $c$ <String>
+        \alt $c$
+    \end{grammar}
+
+    \paragraph{The concern (\emph{.sjc}) file (optional)}
+    This file allows the user to group individual packages or class files into `mappings' to make referring to them easier when defining subjects. In other words, this is the concern mapping file. This file is optional, however; SubjectJ, like Hyper/J, creates a mapping for every included class file (see the includes file above) -- the name of the concern will be the Java fully-qualified name. This name can be used in the subjects file (see below) instead if desired, skipping any need for this file.
+    \begin{grammar}
+        <Concerns> ::= <Concern> <Concerns>
+        \alt <Concern>
+
+        <Concern> ::= package <KeyValue>
+        \alt class <KeyValue>
+        \alt interface <KeyValue>
+        \alt method <KeyValue>
+        \alt field <KeyValue>
+
+        <KeyValue> ::= <Path> : <String>
+
+        <Path> ::= <String> . <Path>
+        \alt <String>
+
+        <String> ::= $c$ <String>
+        \alt $c$
+    \end{grammar}
+
+    \paragraph{The subject (\emph{.sj}) file}
+    This is where the action happens; the actual subjects are defined in this file. This grammar is the most likely to change based on requirements and feedback as development continues. As it stands currently, there can be one or more subject files -- one for each subjective view of the code. The name on top of the file must be distinct among all subjects -- unlike Hyper/J, the names are not specified as commandline arguments; the names from the subject files will be used as the names of the folders in which the composed files will be placed. As noted above, the concerns in this file may be the concerns named in the concerns file (above), or they may simply be Java fully-qualified names. SubjectJ will only perform compositions on the named concerns in this file; all other concerns will be untouched with the exception of being updated to work correctly with the newly composed files.
+    \begin{grammar}
+        <Subject> ::= <Name> <Concerns> <GeneralStrategy> <SpecificStrategies>
+
+        <Name> ::= <String>
+
+        <Concerns> ::= <Concern> <Concerns>
+        \alt <Concern>
+
+        <Concern> ::= <Path>
+        \alt <String>
+
+        <GeneralStrategy> ::= merge by name
+        \alt noncorresponding merge
+        \alt override by name
+
+        <SpecificStrategies> ::= <Strategy> <SpecificStrategies>
+        \alt <Strategy>
+
+        <Strategy> ::= <Merge>
+        \alt <Override>
+        \alt \ldots
+
+        <Merge> ::= merge <Method> with <Method>
+        \alt merge <Method> with <Method> via <SummaryMethod>
+        \alt merge <Field> with <Field> via <SummaryMethod>
+
+        <Override> ::= override <Method> with <Method>
+        \alt override <Field> with <Field>
+
+        <Class> ::= <Concern> . <String>
+        \alt <Concern>
+
+        <Method> ::= <Concern> . <String>
+        \alt <Concern>
+
+        <Field> ::= <Concern> . <String>
+        \alt <Concern>
+
+        <Path> ::= <String> . <Path>
+        \alt <String>
+
+        <String> ::= $c$ <String>
+        \alt $c$
+    \end{grammar}
+\end{document}
