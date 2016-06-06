@@ -75,10 +75,11 @@
         <Strategy> ::= <Merge>
         \alt <Override>
         \alt \ldots
+        \alt $\epsilon$
 
         <Merge> ::= merge <Method> with <Method>
-        \alt merge <Method> with <Method> via <SummaryMethod>
-        \alt merge <Field> with <Field> via <SummaryMethod>
+        \alt merge <Method> with <Method> via <Method>
+        \alt merge <Field> with <Field> via <Method>
 
         <Override> ::= override <Method> with <Method>
         \alt override <Field> with <Field>
