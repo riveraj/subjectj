@@ -26,15 +26,15 @@ public final class ClassFileUtils {
 	}
 
 	/**
-	 * Gets all .class files contained within the given path. This method does
+	 * Gets all .class files contained within the given path. This function does
 	 * not allow for recursive searching of sub-directories.
 	 * 
-	 * Passing a path to a directory to this method will return a
+	 * Passing a path to a directory to this function will return a
 	 * {@link Collection} containing all .class files contained within that
 	 * directory.
 	 * 
-	 * Passing a path to a file to this method will return a {@link Collection}
-	 * containing only that file.
+	 * Passing a path to a file to this function will return a
+	 * {@link Collection} containing only that file.
 	 * 
 	 * @param path
 	 *            The path to search for .class files in.
@@ -50,12 +50,12 @@ public final class ClassFileUtils {
 	 * Gets all .class files contained within the given path. Allows for the
 	 * user to specify whether to search sub-directories recursively.
 	 * 
-	 * Passing a path to a directory to this method will return a
+	 * Passing a path to a directory to this function will return a
 	 * {@link Collection} containing all .class files contained within that
 	 * directory.
 	 * 
-	 * Passing a path to a file to this method will return a {@link Collection}
-	 * containing only that file.
+	 * Passing a path to a file to this function will return a
+	 * {@link Collection} containing only that file.
 	 * 
 	 * @param path
 	 *            The path to search for .class files in.
@@ -72,27 +72,27 @@ public final class ClassFileUtils {
 	/**
 	 * Gets all .class files contained within the given path. Allows for the
 	 * user to specify files and/or directories to exclude from the returned
-	 * {@link Collection}. This method does not allow for recursive searching of
-	 * sub-directories.
+	 * {@link Collection}. This function does not allow for recursive searching
+	 * of sub-directories.
 	 * 
-	 * Passing a path to a directory to this method will return a
+	 * Passing a path to a directory to this function will return a
 	 * {@link Collection} containing all .class files contained within that
 	 * directory.
 	 * 
-	 * Passing a path to a file to this method will return a {@link Collection}
-	 * containing only that file.
+	 * Passing a path to a file to this function will return a
+	 * {@link Collection} containing only that file.
 	 * 
 	 * @param path
 	 *            The path to search for .class files in.
-	 * @param exceptions
+	 * @param excludes
 	 *            The {@link Collection} of paths to exclude from the returned
 	 *            {@link Collection}.
 	 * @return A {@link Collection} of all .class files found within the path.
 	 * @throws IOException
 	 *             If an error occurs accessing the path.
 	 */
-	public static final Collection<Path> getClassFiles(Path path, Collection<Path> exceptions) throws IOException {
-		return getClassFiles(path, false, exceptions);
+	public static final Collection<Path> getClassFiles(Path path, Collection<Path> excludes) throws IOException {
+		return getClassFiles(path, false, excludes);
 	}
 
 	/**
@@ -101,25 +101,25 @@ public final class ClassFileUtils {
 	 * specify files and/or directories to exclude from the returned
 	 * {@link Collection}.
 	 * 
-	 * Passing a path to a directory to this method will return a
+	 * Passing a path to a directory to this function will return a
 	 * {@link Collection} containing all .class files contained within that
 	 * directory.
 	 * 
-	 * Passing a path to a file to this method will return a {@link Collection}
-	 * containing only that file.
+	 * Passing a path to a file to this function will return a
+	 * {@link Collection} containing only that file.
 	 * 
 	 * @param path
 	 *            The path to search for .class files in.
 	 * @param recursive
 	 *            Boolean value to set whether to search recursively.
-	 * @param exceptions
+	 * @param excludes
 	 *            The {@link Collection} of paths to exclude from the returned
 	 *            {@link Collection}.
 	 * @return A {@link Collection} of all .class files found within the path.
 	 * @throws IOException
 	 *             If an error occurs accessing the path.
 	 */
-	public static final Collection<Path> getClassFiles(Path path, boolean recursive, Collection<Path> exceptions)
+	public static final Collection<Path> getClassFiles(Path path, boolean recursive, Collection<Path> excludes)
 			throws IOException {
 		Collection<Path> result = new ArrayList<Path>();
 
@@ -132,7 +132,7 @@ public final class ClassFileUtils {
 				if (dir.equals(path))
 					return CONTINUE;
 
-				if (recursive && !exceptions.contains(dir))
+				if (recursive && !excludes.contains(dir))
 					return CONTINUE;
 
 				return SKIP_SUBTREE;
@@ -140,7 +140,7 @@ public final class ClassFileUtils {
 
 			@Override
 			public FileVisitResult visitFile(Path file, BasicFileAttributes attr) {
-				if (matcher.matches(file) && !exceptions.contains(file))
+				if (matcher.matches(file) && !excludes.contains(file))
 					result.add(file);
 
 				return CONTINUE;
