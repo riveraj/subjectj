@@ -9,26 +9,18 @@
     \paragraph{The include (\emph{.sji}) file}
     This file contains the list of all packages and/or class files that SubjectJ will work with. Any package or class file not listed in this file will not be modified or otherwise touched by SubjectJ. This file is important because even if some of the included classes may not be mentioned in any mappings, SubjectJ will update every class named in this file as necessary so that they correctly interact with any newly composed class(es).
     \begin{grammar}
-        <Include> ::= <List> <Include>
-        \alt <List>
+        <Includes> ::= (<Listing>)+
 
-        <List> ::= package <PathList> <OptionList>
-        \alt class <PathList>
+        <Listing> ::= `package' <Packages> [`recursive'] [`exclude' <Classes>]
+        \alt `class' <Classes>
 
-        <PathList> ::= <Path> , <PathList>
-        \alt <Path>
+        <Packages> ::= <Qualified> `.*' (`,' <Qualified> `.*')*
 
-        <Path> ::= <String> . <Path>
-        \alt <String>
+        <Classes> ::= <Qualified> (`,' <Qualified>)*
 
-        <OptionList> ::= <Option> <OptionList>
-        \alt <Option>
+        <Qualified> ::= <String> (`.' <String>)*
 
-        <Option> ::= exclude <ClassSpecification>
-        \alt  recursive
-
-        <String> ::= $c$ <String>
-        \alt $c$
+        <String> ::= (a | .. | z | A | .. | Z | 1 | .. | 9)+
     \end{grammar}
 
     \paragraph{The concern (\emph{.sjc}) file (optional)}
