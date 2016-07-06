@@ -1,0 +1,12 @@
+include:
+    java.sql.*
+    java.util.*
+        recursive
+    java.io.*
+        exclude:
+            java.io.File
+    java.nio.*
+        recursive
+        exclude:
+            java.nio.Files
+    java.util.List
